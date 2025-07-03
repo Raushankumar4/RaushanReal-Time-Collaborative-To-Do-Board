@@ -6,6 +6,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const connectDB = require("./db/db");
 const handleSocketConnection = require("./socket/socket");
+const errorHandler = require("./middleware/errorHandler");
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ const io = new Server(server, {
 handleSocketConnection(io);
 
 // Routes
+app.use(errorHandler);
 app.get("/", (req, res) => {
   res.send("Server is Running");
 });
