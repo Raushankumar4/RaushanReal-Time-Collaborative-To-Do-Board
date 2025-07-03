@@ -61,4 +61,13 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { registerUser, loginUser };
+const logoutUser = asyncHandler(async (req, res) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+  return response.success(res, "Logout successful");
+});
+
+module.exports = { registerUser, loginUser, logoutUser };
