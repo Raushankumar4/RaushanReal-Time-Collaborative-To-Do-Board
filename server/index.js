@@ -38,11 +38,11 @@ const io = new Server(server, {
 handleSocketConnection(io);
 
 // Routes
-app.use("/api/v1/auth", authRoutes);
-app.use(errorHandler);
 app.get("/", (req, res) => {
   res.send("Server is Running");
 });
+app.use("/api/v1/auth", authRoutes);
+app.use(errorHandler);
 
 // Starting the server after DB connection
 const PORT = process.env.PORT || 5000;
