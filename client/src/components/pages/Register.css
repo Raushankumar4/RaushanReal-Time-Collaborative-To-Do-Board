@@ -1,0 +1,45 @@
+.auth-container {
+  max-width: 400px;
+  width: 90%;
+  margin: 3rem auto;
+  padding: 2rem 2.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.auth-container h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  color: #222;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+button[type="submit"] {
+  padding: 0.75rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+button[type="submit"]:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}

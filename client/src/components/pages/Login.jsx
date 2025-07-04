@@ -1,10 +1,14 @@
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { loginUser } from '../services/authService';
+import useFormValidation from '../../hooks/useFormValidation';
+import InputField from '../../components/resuable/InputField';
+import './Login.css';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [formErrors, setFormErrors] = useState({});
   const navigate = useNavigate();
 
   const { mutate, isPending, error } = useMutation({
@@ -14,9 +18,16 @@ const Login = () => {
     },
   });
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.email || !form.password) return alert("All fields required");
+    const errors = useFormValidation(form, ['email', 'password']);
+    setFormErrors(errors);
+    if (Object.keys(errors).length > 0) return;
     mutate(form);
   };
 
@@ -24,23 +35,39 @@ const Login = () => {
     <div className="auth-container">
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
-        <input
+        <InputField
           type="email"
-          placeholder="Email"
+          name="email"
           value={form.email}
-          onChange={(e) => setForm({ ...form, email: e.target.value })}
+          placeholder="Email"
+          onChange={handleChange}
+          error={formErrors.email}
         />
-        <input
+        <InputField
           type="password"
-          placeholder="Password"
+          name="password"
           value={form.password}
-          onChange={(e) => setForm({ ...form, password: e.target.value })}
+          placeholder="Password"
+          onChange={handleChange}
+          error={formErrors.password}
         />
         <button type="submit" disabled={isPending}>
-          {isPending ? "Logging in..." : "Login"}
+          {isPending ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      {error && <p style={{ color: "red" }}>{error.response?.data?.message || "Login failed"}</p>}
+
+      {error && (
+        <p style={{ color: 'red', marginTop: '1rem' }}>
+          {error.response?.data?.message || 'Login failed'}
+        </p>
+      )}
+
+      <div className="footer-text">
+        Don’t have an account?{' '}
+        <Link to="/register">
+          Create one
+        </Link>
+      </div>
     </div>
   );
 };
