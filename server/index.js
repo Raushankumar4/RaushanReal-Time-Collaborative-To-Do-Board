@@ -8,6 +8,7 @@ const connectDB = require("./db/db");
 const handleSocketConnection = require("./socket/socket");
 const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require("./routes/auth.route");
+const taskRoutes = require("./routes/task.route");
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.get("/", (req, res) => {
   res.send("Server is Running");
 });
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/task", taskRoutes);
 app.use(errorHandler);
 
 // Starting the server after DB connection
