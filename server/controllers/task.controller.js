@@ -29,7 +29,7 @@ const createTask = asyncHandler(async (req, res) => {
 });
 
 const getTasks = asyncHandler(async (_, res) => {
-  const tasks = await Task.find().populate("assignedTo", "name email");
+  const tasks = await Task.find().populate("assignedTo", "fullName email");
   return response.success(res, "Tasks", tasks);
 });
 

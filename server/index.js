@@ -9,6 +9,7 @@ const handleSocketConnection = require("./socket/socket");
 const errorHandler = require("./middleware/errorHandler");
 const authRoutes = require("./routes/auth.route");
 const taskRoutes = require("./routes/task.route");
+const actionLogRoutes = require("./routes/actionlog.route");
 
 dotenv.config();
 
@@ -44,6 +45,8 @@ app.get("/", (req, res) => {
 });
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/task", taskRoutes);
+app.use("/api/v1/logs", actionLogRoutes);
+
 app.use(errorHandler);
 
 // Starting the server after DB connection
