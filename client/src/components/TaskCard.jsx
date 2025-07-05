@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import { useDrag } from 'react-dnd';
+import { useEffect, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteTask, smartAssign, updateTask } from '../components/services/taskServices';
 import socket from '../components/sockets/socket';
 import toast from 'react-hot-toast';
-import InputField from './resuable/InputField';
 import UpdateTask from './Tasks/UpdateTask';
+import Button from './resuable/Button';
+import { FiEdit, FiTrash2 } from 'react-icons/fi';
+import { FiTag, FiFileText, FiUser, FiTrendingUp } from 'react-icons/fi';
 
-const TaskCard = ({ task }) => {
+import "./TaskCard.css"
+
+const TaskCard = ({ task, onDragStart, shouldFlip }) => {
   const [editMode, setEditMode] = useState(false);
   const [updTitle, setUpdTitle] = useState(task.title);
   const [updDesc, setUpdDesc] = useState(task.description);
+  const [isFlipping, setIsFlipping] = useState(false);
   const queryClient = useQueryClient();
 
-  const [{ isDragging }, dragRef] = useDrag(() => ({
-    type: "TASK",
-    item: { id: task._id, currentStatus: task.status },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }), [task]);
 
+  useEffect(() => {
+    if (shouldFlip) {
+      setIsFlipping(true);
+      const timeout = setTimeout(() => setIsFlipping(false), 600);
+      return () => clearTimeout(timeout);
+    }
+  }, [shouldFlip]);
 
   const { mutate: assign, isPending: isAssigning } = useMutation({
     mutationFn: () => smartAssign(task._id),
@@ -42,7 +46,6 @@ const TaskCard = ({ task }) => {
     onError: () => toast.error("Failed to delete task"),
   });
 
-
   const { mutate: edit, isPending: isUpdating } = useMutation({
     mutationFn: ({ id, updates }) => updateTask({ id, updates }),
     onSuccess: () => {
@@ -53,7 +56,6 @@ const TaskCard = ({ task }) => {
     },
     onError: () => toast.error("Update failed"),
   });
-
 
   const handleUpdateSubmit = (e) => {
     e.preventDefault();
@@ -66,11 +68,13 @@ const TaskCard = ({ task }) => {
       }
     });
   };
+
   return (
     <div
-      ref={dragRef}
-      className="task-card"
-      style={{ opacity: isDragging ? 0.5 : 1, position: 'relative' }}
+      className={`task-card ${isFlipping ? 'flip' : ''}`}
+      style={{ opacity: 1, position: 'relative' }}
+      draggable
+      onDragStart={(e) => onDragStart(e, task)}
     >
       {editMode ? (
         <UpdateTask
@@ -82,46 +86,62 @@ const TaskCard = ({ task }) => {
           handleUpdateSubmit={handleUpdateSubmit}
           setUpdTitle={setUpdTitle}
         />
-
       ) : (
-
         <>
-          <h4>{task.title}</h4>
-          <p>{task.description}</p>
+          <div className="btn-icon-group">
+            <Button
+              onClick={() => setEditMode(true)}
+              type="primary"
+            >
+              <FiEdit />
+            </Button>
+            <Button
+              aria-label="Delete task"
+              type="danger"
+              onClick={() => remove()}
+              disabled={isDeleting}
+            >
+              <FiTrash2 />
+            </Button>
+          </div>
+
+          <h4 className="task-title">
+            <FiTag className="icon" /> {task.title}
+          </h4>
+
+          <p className="task-desc">
+            <FiFileText className="icon" /> {task.description}
+          </p>
+
           {task.assignedTo ? (
-            <p style={{ color: "green", fontWeight: "bold" }}>
-              👤 Assigned to: {task.assignedTo.fullName}
+            <p className="assigned green">
+              <FiUser className="icon" /> Assigned to: {task.assignedTo.fullName}
             </p>
           ) : (
-            <p style={{ color: "red" }}>👤 Unassigned</p>
+            <p className="assigned red">
+              <FiUser className="icon" /> Unassigned
+            </p>
           )}
-          <p>🔥 {task.priority}</p>
 
-          <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
-            {!task.assignedTo && (
-              <button onClick={() => assign()} disabled={isAssigning}>
-                {isAssigning ? "Assigning..." : "Smart Assign"}
-              </button>
-            )}
+          <p className="priority">
+            <FiTrendingUp className="icon" /> {task.priority}
+          </p>
 
-            {task?.createdBy && (
-              <>
-                <button onClick={() => setEditMode(true)}>
-                  ✏️ Edit
-                </button>
-                <button
-                  onClick={() => remove()}
-                  disabled={isDeleting}
-                  style={{ background: 'red', color: '#fff' }}
-                >
-                  {isDeleting ? "Deleting..." : "🗑 Delete"}
-                </button>
-              </>
-            )}
-          </div>
+
+          {!task.assignedTo && (
+            <Button
+              type="primary"
+              onClick={() => assign()}
+              disabled={isAssigning}
+
+            >
+              {isAssigning ? 'Assigning...' : 'Smart Assign'}
+            </Button>
+          )}
         </>
       )}
     </div>
+
   );
 };
 

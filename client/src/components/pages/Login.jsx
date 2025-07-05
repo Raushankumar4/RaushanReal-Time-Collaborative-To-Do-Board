@@ -6,6 +6,7 @@ import useFormValidation from '../../hooks/useFormValidation';
 import InputField from '../../components/resuable/InputField';
 import './Login.css';
 import toast from 'react-hot-toast';
+import Button from '../resuable/Button';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -58,9 +59,9 @@ const Login = () => {
           onChange={handleChange}
           error={formErrors.password}
         />
-        <button type="submit" disabled={isPending}>
+        <Button type="primary" disabled={isPending}>
           {isPending ? 'Logging in...' : 'Login'}
-        </button>
+        </Button>
       </form>
 
       {error && (

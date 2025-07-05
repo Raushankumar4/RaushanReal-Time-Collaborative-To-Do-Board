@@ -1,40 +1,53 @@
-import { useDrop } from 'react-dnd';
+import React, { useState } from 'react';
 import TaskCard from './TaskCard';
 import axiosInstance from '../components/services/axiosInstance';
 import socket from '../components/sockets/socket';
+import './BoardColumn.css';
 
-const BoardColumn = ({ status, tasks }) => {
-  const [{ isOver }, dropRef] = useDrop(() => ({
-    accept: "TASK",
-    drop: async (item) => {
-      if (item.currentStatus !== status) {
-        try {
-          await axiosInstance.put(`task/update/${item.id}`, {
-            status,
-            lastEditedAt: new Date().toISOString(),
-          });
+const BoardColumn = ({ status, tasks, onTaskMoved }) => {
+  const [flippedTaskId, setFlippedTaskId] = useState(null);
 
-          socket.emit("task:updated");
-        } catch (err) {
-          console.error("Update failed", err?.response?.data?.message);
-        }
+  const handleDragOver = (e) => e.preventDefault();
+
+  const handleDrop = async (e) => {
+    const taskData = JSON.parse(e.dataTransfer.getData("task"));
+
+    if (taskData.currentStatus !== status) {
+      try {
+        await axiosInstance.put(`task/update/${taskData.id}`, {
+          status,
+          lastEditedAt: new Date().toISOString(),
+        });
+
+        socket.emit("task:updated");
+        setFlippedTaskId(taskData.id);
+        onTaskMoved?.();
+      } catch (err) {
+        console.error("Update failed", err?.response?.data?.message);
       }
-    },
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-    }),
-  }), [status]);
+    }
+  };
+
+  const handleDragStart = (e, task) => {
+    e.dataTransfer.setData("task", JSON.stringify({
+      id: task._id,
+      currentStatus: task.status,
+    }));
+  };
 
   return (
-    <div
-      ref={dropRef}
-      className="column"
-      style={{ backgroundColor: isOver ? "#e8f0ff" : "#f9f9f9" }}
-    >
+    <div className="column" onDragOver={handleDragOver} onDrop={handleDrop}>
       <h3>{status}</h3>
-      {tasks.map((task) => (
-        <TaskCard key={task?._id} task={task} />
-      ))}
+      {tasks
+        .filter(task => task.status === status)
+        .map(task => (
+          <TaskCard
+            key={task._id}
+            task={task}
+            onDragStart={handleDragStart}
+            shouldFlip={task._id === flippedTaskId}
+          />
+        ))}
     </div>
   );
 };

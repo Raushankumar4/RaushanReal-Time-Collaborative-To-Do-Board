@@ -1,0 +1,84 @@
+.activity-log {
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  max-width: 800px;
+  padding: 10px auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  max-height: none;
+  overflow: visible;
+}
+
+@media (min-width: 1024px) {
+  .activity-log {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+}
+
+.log-title {
+  margin-bottom: 1rem;
+  padding-left: 40px;
+  color: #2c3e50;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 0.5rem;
+}
+
+.log-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.log-entry {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-left: 4px solid #3498db;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.log-entry:hover {
+  background-color: #eef6fc;
+}
+
+.log-entry p {
+  margin: 0;
+  font-size: 1rem;
+  color: #34495e;
+}
+
+.log-entry em {
+  color: #2980b9;
+  font-style: normal;
+  font-weight: 500;
+}
+
+.log-entry strong {
+  color: #2c3e50;
+}
+
+.log-timestamp {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #7f8c8d;
+}
+
+@media (max-width: 600px) {
+  .activity-log {
+    padding: 1rem;
+  }
+
+  .log-title {
+    font-size: 1.25rem;
+  }
+
+  .log-entry p {
+    font-size: 0.95rem;
+  }
+
+  .log-timestamp {
+    font-size: 0.75rem;
+  }
+}

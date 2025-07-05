@@ -1,0 +1,36 @@
+.update-task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 12px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.update-task-textarea {
+  resize: vertical;
+  min-height: 90px;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  color: #334155;
+  transition: border-color 0.3s ease;
+}
+
+.update-task-textarea:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.3);
+}
+
+.update-task-buttons {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.update-task-buttons button {
+  flex: 1 1 45%;
+  min-width: 100px;
+}

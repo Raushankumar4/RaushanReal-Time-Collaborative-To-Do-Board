@@ -1,40 +1,82 @@
 .input-group {
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
   width: 100%;
 }
 
 .input-wrapper {
   position: relative;
+  width: 100%;
 }
 
 .input {
   width: 100%;
   box-sizing: border-box;
-  padding: 0.5rem 2.5rem 0.5rem 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.5rem 2.75rem 0.5rem 0.75rem; /* extra right padding for toggle btn */
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.auth-container {
-  max-width: 400px;
-  width: 100%;
-  margin: auto;
-  padding: 2rem;
-  box-sizing: border-box;
+.input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.5);
 }
 
 .input-error {
-  border-color: red;
+  border-color: #ef4444; /* nicer red */
+  box-shadow: 0 0 6px rgba(239, 68, 68, 0.5);
 }
 
 .toggle-btn {
   position: absolute;
-  right: 0.5rem;
+  right: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.25rem;
+  color: #6b7280;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.3s ease;
+}
+
+.toggle-btn:hover {
+  color: #2563eb;
+}
+
+.auth-container {
+  max-width: 400px;
+  width: 100%;
+  margin: 4rem auto;
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .auth-container {
+    margin: 3rem 1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .input {
+    font-size: 0.95rem;
+    padding: 0.5rem 2.5rem 0.5rem 0.6rem;
+  }
+
+  .toggle-btn {
+    font-size: 1.1rem;
+    right: 0.6rem;
+  }
 }

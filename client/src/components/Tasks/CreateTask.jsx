@@ -5,8 +5,9 @@ import socket from '../sockets/socket';
 import toast from 'react-hot-toast';
 import InputField from '../resuable/InputField';
 import './Create.css';
+import Button from '../resuable/Button';
 
-const CreateTask = () => {
+const CreateTask = ({ onClose }) => {
   const [form, setForm] = useState({ title: "", description: "", priority: "Low" });
   const queryClient = useQueryClient();
 
@@ -17,9 +18,11 @@ const CreateTask = () => {
       queryClient.invalidateQueries(["tasks"]);
       socket.emit("task:created");
       setForm({ title: "", description: "", priority: "Low" });
+      onClose()
     },
     onError: () => {
       toast.error("Task creation failed");
+      onClose()
     },
   });
 
@@ -51,9 +54,9 @@ const CreateTask = () => {
         <option>Medium</option>
         <option>High</option>
       </select>
-      <button type="submit" disabled={isPending}>
+      <Button type="primary" disabled={isPending}>
         {isPending ? "Creating..." : "Create Task"}
-      </button>
+      </Button>
     </form>
   );
 };

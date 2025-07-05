@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
+import Loading from '../Loading/Loading';
 
 const PrivateRoute = ({ children }) => {
   const [isAuth, setIsAuth] = useState(null);
@@ -14,7 +15,7 @@ const PrivateRoute = ({ children }) => {
       .catch(() => setIsAuth(false));
   }, []);
 
-  if (isAuth === null) return <div>Loading...</div>;
+  if (isAuth === null) return <Loading />;
 
   return isAuth ? children : <Navigate to="/" replace />;
 };

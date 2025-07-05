@@ -1,0 +1,131 @@
+.task-card {
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  cursor: default;
+  background-color: #ffffff;
+}
+
+/* Hover effect */
+.task-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Title */
+.task-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  color: #111827;
+}
+
+/* Description */
+.task-desc {
+  font-size: 1rem;
+  color: #4b5563;
+  margin-bottom: 0.6rem;
+  line-height: 1.4;
+}
+
+/* Assigned user */
+.assigned {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.assigned.green {
+  color: #16a34a;
+}
+
+.assigned.red {
+  color: #dc2626;
+}
+
+/* Priority label */
+.priority {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 0.6rem;
+}
+
+/* Icon group */
+.btn-icon-group {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+/* Action buttons */
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.75rem;
+}
+
+.task-actions button {
+  flex: 1 1 auto;
+  min-width: 100px;
+  padding: 0.45rem 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  background-color: #e5e7eb;
+  color: #1f2937;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.task-actions button:hover {
+  background-color: #d1d5db;
+}
+
+/* Icon styling */
+.icon {
+  vertical-align: middle;
+  margin-right: 0.4rem;
+  font-size: 1.15rem;
+  color: inherit;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .task-card {
+    padding: 0.85rem;
+  }
+
+  .task-actions button {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .task-card {
+    padding: 0.75rem;
+  }
+
+  .task-title {
+    font-size: 1.05rem;
+  }
+
+  .task-desc {
+    font-size: 0.95rem;
+  }
+
+  .task-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .task-actions button {
+    width: 100%;
+  }
+}

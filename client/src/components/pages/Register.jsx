@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import InputField from '../../components/resuable/InputField';
 import useFormValidation from '../../hooks/useFormValidation';
 import "./Register.css"
+import Button from "../resuable/Button"
 
 const Register = () => {
   const [form, setForm] = useState({ fullName: '', email: '', password: '' });
@@ -22,7 +23,7 @@ const Register = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
-      navigate('/login');
+      navigate('/');
     },
   });
 
@@ -40,6 +41,7 @@ const Register = () => {
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <InputField
+          label="Full Name"
           name="fullName"
           placeholder="Full Name"
           value={form.fullName}
@@ -47,6 +49,7 @@ const Register = () => {
           error={errors.fullName}
         />
         <InputField
+          label="Email"
           name="email"
           placeholder="Email"
           value={form.email}
@@ -54,6 +57,7 @@ const Register = () => {
           error={errors.email}
         />
         <InputField
+          label="Password"
           name="password"
           type="password"
           placeholder="Password"
@@ -61,9 +65,9 @@ const Register = () => {
           onChange={handleChange}
           error={errors.password}
         />
-        <button type="submit" disabled={isPending}>
+        <Button type="primary" disabled={isPending}>
           {isPending ? 'Registering...' : 'Register'}
-        </button>
+        </Button>
       </form>
 
       {error && (
