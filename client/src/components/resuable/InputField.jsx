@@ -23,14 +23,13 @@ const InputField = forwardRef(
             className={`input ${error ? 'input-error' : ''}`}
           />
           {type === 'password' && (
-            <button
-              type="button"
+            <icon type="button"
               className="toggle-btn"
               onClick={() => setShowPassword((prev) => !prev)}
               tabIndex={-1}
             >
               {showPassword ? '🙈' : '👁️'}
-            </button>
+            </icon>
           )}
         </div>
         <p style={{

@@ -5,6 +5,7 @@ import { loginUser } from '../services/authService';
 import useFormValidation from '../../hooks/useFormValidation';
 import InputField from '../../components/resuable/InputField';
 import './Login.css';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const [form, setForm] = useState({ email: '', password: '' });
@@ -13,9 +14,13 @@ const Login = () => {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: loginUser,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(data?.message || "Logged")
       navigate('/board');
     },
+    onError: (error) => {
+      toast.error(error.response?.data?.message)
+    }
   });
 
   const handleChange = (e) => {
@@ -36,6 +41,7 @@ const Login = () => {
       <h2>Login</h2>
       <form onSubmit={handleSubmit}>
         <InputField
+          label="Email"
           type="email"
           name="email"
           value={form.email}
@@ -44,6 +50,7 @@ const Login = () => {
           error={formErrors.email}
         />
         <InputField
+          label="Password"
           type="password"
           name="password"
           value={form.password}

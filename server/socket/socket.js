@@ -1,29 +1,29 @@
 module.exports = function handleSocketConnection(io) {
   io.on("connection", (socket) => {
-    console.log("User connected:", socket.id);
+    console.log("⚡ User connected:", socket.id);
 
     socket.on("disconnect", () => {
       console.log("User disconnected:", socket.id);
     });
 
-    // Task updated → broadcast to others
+    // Task updated → emit to ALL (including sender)
     socket.on("task:updated", (data) => {
-      socket.broadcast.emit("task:updated", data);
+      io.emit("task:updated", data);
     });
 
-    // Task created
+    // Task created → emit to ALL
     socket.on("task:created", (data) => {
-      socket.broadcast.emit("task:created", data);
+      io.emit("task:created", data);
     });
 
-    // Task deleted
+    // Task deleted → emit to ALL
     socket.on("task:deleted", (data) => {
-      socket.broadcast.emit("task:deleted", data);
+      io.emit("task:deleted", data);
     });
 
-    // Log updated (optional)
+    // Log added → emit to ALL
     socket.on("log:added", (data) => {
-      socket.broadcast.emit("log:added", data);
+      io.emit("log:added", data);
     });
   });
 };

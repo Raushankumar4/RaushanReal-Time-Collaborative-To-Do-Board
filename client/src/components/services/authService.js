@@ -6,6 +6,11 @@ export const loginUser = async (payload) => {
 };
 
 export const registerUser = async (payload) => {
-  const { data } = await axiosInstance.post("/api/auth/register", payload);
+  const { data } = await axiosInstance.post("auth/regitser", payload);
+  return data;
+};
+
+export const logout = async () => {
+  const { data } = await axiosInstance.get("auth/logout");
   return data;
 };
