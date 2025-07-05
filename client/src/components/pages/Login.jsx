@@ -59,7 +59,7 @@ const Login = () => {
           onChange={handleChange}
           error={formErrors.password}
         />
-        <Button type="primary" disabled={isPending}>
+        <Button type="submit" disabled={isPending}>
           {isPending ? 'Logging in...' : 'Login'}
         </Button>
       </form>

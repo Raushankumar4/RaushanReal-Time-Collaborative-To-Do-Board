@@ -65,7 +65,7 @@ const Register = () => {
           onChange={handleChange}
           error={errors.password}
         />
-        <Button type="primary" disabled={isPending}>
+        <Button type="submit" disabled={isPending}>
           {isPending ? 'Registering...' : 'Register'}
         </Button>
       </form>

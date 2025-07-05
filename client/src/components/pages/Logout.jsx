@@ -19,7 +19,7 @@ const Logout = () => {
   });
 
   return (
-    <Button type="danger"
+    <Button type="submit"
       onClick={() => mutate()}
       disabled={isPending}
 
