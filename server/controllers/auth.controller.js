@@ -56,9 +56,7 @@ const loginUser = asyncHandler(async (req, res) => {
     maxAge: 24 * 60 * 60 * 1000,
   });
 
-  return response.success(res, "Login successful", {
-    fullName: user.fullName,
-  });
+  return response.success(res, "Login successful", token);
 });
 
 const logoutUser = asyncHandler(async (req, res) => {

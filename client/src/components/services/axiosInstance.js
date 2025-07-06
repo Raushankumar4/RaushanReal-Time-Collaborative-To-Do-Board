@@ -5,15 +5,15 @@ const axiosInstance = axios.create({
   withCredentials: true,
 });
 
-axiosInstance.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response?.status === 401) {
-      console.warn("Unauthorized! Redirecting to login...");
-      window.location.href = "/";
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-    return Promise.reject(err);
-  }
+    return config;
+  },
+  (error) => Promise.reject(error)
 );
 
 export default axiosInstance;

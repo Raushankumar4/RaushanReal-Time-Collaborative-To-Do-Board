@@ -16,6 +16,7 @@ const Login = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: loginUser,
     onSuccess: (data) => {
+      localStorage.setItem("token", data?.data)
       toast.success(data?.message || "Logged")
       navigate('/board');
     },

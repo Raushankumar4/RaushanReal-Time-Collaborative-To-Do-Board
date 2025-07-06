@@ -3,6 +3,7 @@ import ErrorBoundary from '../layout/ErrorBoundary';
 import { lazy, Suspense } from 'react';
 import App from '../../App';
 import Loading from '../Loading/Loading';
+import { ProtectedRoute } from './ProtectedRoute';
 
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
@@ -33,7 +34,9 @@ export const router = createBrowserRouter([
         path: 'board',
         element: (
           <Suspense fallback={<Loading />}>
-            <KanbanBoard />
+            <ProtectedRoute>
+              <KanbanBoard />
+            </ProtectedRoute>
           </Suspense>
         ),
       },

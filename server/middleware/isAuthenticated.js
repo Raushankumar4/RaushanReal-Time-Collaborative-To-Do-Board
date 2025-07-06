@@ -3,7 +3,10 @@ const response = require("../utils/response");
 
 module.exports = function isAuthenticated(req, res, next) {
   try {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
+    const token =
+      req.cookies.token ||
+      (req.headers.authorization?.startsWith("Bearer ") &&
+        req.headers.authorization.split(" ")[1]);
 
     if (!token) {
       return response.error(res, "Invalid token or session expired", 401);

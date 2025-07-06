@@ -10,6 +10,7 @@ const Logout = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: logout,
     onSuccess: () => {
+      localStorage.removeItem("token")
       toast.success("You have been logged out.");
       navigate("/");
     },
