@@ -12,7 +12,6 @@ export const deleteTask = async (taskId) => {
 
 export const fetchTasks = async () => {
   const { data } = await axiosInstance.get("task");
-  console.log(data);
   return data;
 };
 

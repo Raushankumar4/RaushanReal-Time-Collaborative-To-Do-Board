@@ -5,7 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import InputField from '../../components/resuable/InputField';
 import useFormValidation from '../../hooks/useFormValidation';
 import "./Register.css"
-import Button from "../resuable/Button"
+import toast from 'react-hot-toast';
+import { Link } from "react-router-dom";
+
 
 const Register = () => {
   const [form, setForm] = useState({ fullName: '', email: '', password: '' });
@@ -22,9 +24,13 @@ const Register = () => {
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: registerUser,
-    onSuccess: () => {
+    onSuccess: (data) => {
+      toast.success(data?.message || "registered")
       navigate('/');
     },
+    onError: (error) => {
+      toast.error(error.response.data)
+    }
   });
 
   const handleSubmit = (e) => {
@@ -37,44 +43,65 @@ const Register = () => {
   };
 
   return (
-    <div className="auth-container">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit}>
-        <InputField
-          label="Full Name"
-          name="fullName"
-          placeholder="Full Name"
-          value={form.fullName}
-          onChange={handleChange}
-          error={errors.fullName}
-        />
-        <InputField
-          label="Email"
-          name="email"
-          placeholder="Email"
-          value={form.email}
-          onChange={handleChange}
-          error={errors.email}
-        />
-        <InputField
-          label="Password"
-          name="password"
-          type="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          error={errors.password}
-        />
-        <Button type="submit" disabled={isPending}>
-          {isPending ? 'Registering...' : 'Register'}
-        </Button>
-      </form>
+    <div className="auth-page">
+      <div className="auth-container">
+        <h2 style={{ textAlign: "center" }} >Create Account</h2>
 
-      {error && (
-        <p style={{ color: 'red' }}>
-          {error.response?.data?.message || 'Registration failed'}
-        </p>
-      )}
+        <form onSubmit={handleSubmit} className="auth-form">
+          <div className="auth-row">
+            <InputField
+              label="Full Name"
+              name="fullName"
+              placeholder="John Doe"
+              value={form.fullName}
+              onChange={handleChange}
+              error={errors.fullName}
+            />
+            <InputField
+              label="Email"
+              name="email"
+              placeholder="email@example.com"
+              value={form.email}
+              onChange={handleChange}
+              error={errors.email}
+            />
+          </div>
+
+          <InputField
+            label="Password"
+            name="password"
+            type="password"
+            placeholder="••••••••"
+            value={form.password}
+            onChange={handleChange}
+            error={errors.password}
+          />
+
+          <button
+            type="submit"
+            disabled={isPending}
+            className={`auth-button ${isPending ? "disabled" : ""}`}
+          >
+            {isPending ? 'Registering...' : 'Register'}
+          </button>
+        </form>
+
+
+        {error && (
+          <p className="auth-error">
+            {error.response?.data?.message || 'Registration failed'}
+          </p>
+        )}
+
+        <div className="auth-footer">
+          <p>
+            Already have an account?{" "}
+            <Link to="/" className="auth-link">
+              Login
+            </Link>
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

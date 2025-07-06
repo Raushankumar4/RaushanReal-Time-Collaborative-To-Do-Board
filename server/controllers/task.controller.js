@@ -18,6 +18,7 @@ const createTask = asyncHandler(async (req, res) => {
     description,
     priority,
     createdBy: req.user.id,
+    assignedTo: req.user.id,
   });
 
   await Action.create({
@@ -75,34 +76,41 @@ const deleteTask = asyncHandler(async (req, res) => {
 const smartAssignTask = asyncHandler(async (req, res) => {
   const taskId = req.params.id;
 
+  // Getting all users
   const users = await User.find();
+  if (!users.length) {
+    return response.error(res, "No users found", 404);
+  }
 
-  if (!users.length) return response.error(res, "No User Found", 404);
-
+  // Counting active tasks for each user
   const taskCounts = await Promise.all(
     users.map(async (user) => {
-      const count = await Task.countDocuments({
+      const activeTaskCount = await Task.countDocuments({
         assignedTo: user._id,
         status: { $in: ["Todo", "In Progress"] },
       });
-      return { user, count };
+      return { user, count: activeTaskCount };
     })
   );
 
-  // Find user with least tasks
+  //  Finding the least busy user
   const leastBusy = taskCounts.reduce((min, curr) =>
     curr.count < min.count ? curr : min
   );
 
-  // Assign the task
+  //  Finding the task
   const task = await Task.findById(taskId);
-  if (!task) return response.error(res, "No Task Found", 404);
+  if (!task) {
+    return response.error(res, "Task not found", 404);
+  }
 
+  // Assigning a task to the user who has the fewest number of active tasks
   task.assignedTo = leastBusy.user._id;
   task.lastEditedAt = new Date();
   await task.save();
 
-  res.json(task);
+  //  Returning the updated task
+  return response.success(res, `Task Assigned Successfully`, task);
 });
 
 module.exports = {

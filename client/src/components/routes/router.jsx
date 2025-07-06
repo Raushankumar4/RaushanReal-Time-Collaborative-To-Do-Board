@@ -1,14 +1,12 @@
 import { createBrowserRouter } from 'react-router-dom';
-import RootLayout from '../layout/RootLayout';
-import PrivateRoute from './PrivateRoute';
 import ErrorBoundary from '../layout/ErrorBoundary';
-import React, { Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import App from '../../App';
 import Loading from '../Loading/Loading';
 
-const Login = React.lazy(() => import('../pages/Login'));
-const Register = React.lazy(() => import('../pages/Register'));
-const KanbanBoard = React.lazy(() => import('../pages/KanbanBoard'));
+const Login = lazy(() => import('../pages/Login'));
+const Register = lazy(() => import('../pages/Register'));
+const KanbanBoard = lazy(() => import('../pages/KanbanBoard'));
 
 export const router = createBrowserRouter([
   {
@@ -35,9 +33,7 @@ export const router = createBrowserRouter([
         path: 'board',
         element: (
           <Suspense fallback={<Loading />}>
-            <PrivateRoute>
-              <KanbanBoard />
-            </PrivateRoute>
+            <KanbanBoard />
           </Suspense>
         ),
       },

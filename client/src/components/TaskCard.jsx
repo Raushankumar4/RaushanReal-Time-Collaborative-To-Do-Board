@@ -7,7 +7,6 @@ import UpdateTask from './Tasks/UpdateTask';
 import Button from './resuable/Button';
 import { FiEdit, FiTrash2 } from 'react-icons/fi';
 import { FiTag, FiFileText, FiUser, FiTrendingUp } from 'react-icons/fi';
-
 import "./TaskCard.css"
 
 const TaskCard = ({ task, onDragStart, shouldFlip }) => {
@@ -128,16 +127,16 @@ const TaskCard = ({ task, onDragStart, shouldFlip }) => {
           </p>
 
 
-          {!task.assignedTo && (
-            <Button
-              type="primary"
-              onClick={() => assign()}
-              disabled={isAssigning}
 
-            >
-              {isAssigning ? 'Assigning...' : 'Smart Assign'}
-            </Button>
-          )}
+          <Button
+            type="primary"
+            onClick={() => assign()}
+            disabled={isAssigning}
+
+          >
+            {isAssigning ? 'Assigning...' : 'Smart Assign'}
+          </Button>
+
         </>
       )}
     </div>
