@@ -32,7 +32,7 @@ const TaskCard = ({ task, onDragStart, shouldFlip }) => {
       socket.emit("task:updated");
       toast.success("Task assigned");
     },
-    onError: () => toast.error("Assignment failed"),
+    onError: (error) => toast.error(error?.response?.data?.message || "Assignment failed"),
   });
 
   const { mutate: remove, isPending: isDeleting } = useMutation({
@@ -53,7 +53,7 @@ const TaskCard = ({ task, onDragStart, shouldFlip }) => {
       socket.emit("task:updated");
       setEditMode(false);
     },
-    onError: () => toast.error("Update failed"),
+    onError: (error) => toast.error(error?.response?.data?.message || "Update failed"),
   });
 
   const handleUpdateSubmit = (e) => {
