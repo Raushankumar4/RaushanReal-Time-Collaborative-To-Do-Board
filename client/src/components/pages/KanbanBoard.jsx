@@ -71,7 +71,7 @@ const KanbanBoard = () => {
         <Logout />
       </div>
 
-      <div className="board-columns">
+      {tasks?.data?.length === 0 ? <h1>Task Not Found!</h1> : <div className="board-columns">
         {Object.keys(grouped).map((status) => (
           <BoardColumn key={status} status={status} tasks={grouped[status]} />
         ))}
@@ -82,7 +82,7 @@ const KanbanBoard = () => {
             <ActivityLog />
           </div>
         )}
-      </div>
+      </div>}
 
       {/* Activity Log on small screens, toggled */}
       {isMobileView && showActivityMobile && (
