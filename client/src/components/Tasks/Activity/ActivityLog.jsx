@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchLogs } from '../components/services/taskServices';
-import socket from '../components/sockets/socket';
-import Loading from './Loading/Loading';
+import { fetchLogs } from '../../services/taskServices';
+import socket from '../../sockets/socket';
+import Loading from '../../Loading/Loading';
 import './ActivityLog.css';
 
 const ActivityLog = () => {

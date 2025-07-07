@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import TaskCard from './TaskCard';
-import axiosInstance from '../components/services/axiosInstance';
-import socket from '../components/sockets/socket';
+import axiosInstance from '../services/axiosInstance';
+import socket from '../sockets/socket';
 import './BoardColumn.css';
 
 const BoardColumn = ({ status, tasks, onTaskMoved }) => {

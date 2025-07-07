@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchTasks } from '../services/taskServices';
-import BoardColumn from '../../components/BoardColumn';
 import socket from '../sockets/socket';
-import ActivityLog from '../ActivityLog';
 import Logout from './Logout';
 import CreateTask from '../Tasks/CreateTask';
 import Loading from '../Loading/Loading';
 import { FiPlus, FiX, FiList } from "react-icons/fi";
 import Button from '../resuable/Button';
+import ActivityLog from '../Tasks/Activity/ActivityLog';
+import BoardColumn from '../Tasks/BoardColumn';
 import './KanbanBoard.css';
 
 const KanbanBoard = () => {
