@@ -6,10 +6,11 @@ A full-stack task management application that enables users to create, assign, u
 
 ## 🔗 Live Links
 
-- 🌐 **Frontend (Vercel)**: [https://your-kanban-frontend.vercel.app](https://your-kanban-frontend.vercel.app)
-- 🖠️ **Backend API (Render)**: [https://your-kanban-backend.onrender.com](https://your-kanban-backend.onrender.com)
+- 🌐 **Frontend (Vercel)**: [https://real-time-collaborative-to-do-board-pi.vercel.app](https://real-time-collaborative-to-do-board-pi.vercel.app)
+- 🖠️ **Backend API (Render)**: [https://real-time-collaborative-to-do-board-p1kn.onrender.com](https://real-time-collaborative-to-do-board-p1kn.onrender.com)
 - ☁️ **Database**: MongoDB Atlas (Cloud)
 - 🗁 **Repository**: GitHub - MERN Kanban Project
+-  **Video Link**: [https://youtu.be/wSZqzvpu_RE?si=-LdrUTmhsHLqFBcY](https://youtu.be/wSZqzvpu_RE?si=-LdrUTmhsHLqFBcY)
 
 ---
 
@@ -96,16 +97,6 @@ npm run dev
 - [x] Smart assign works correctly
 - [x] Task moves update across clients
 - [x] Logout clears cookie + redirects
-
----
-
-## ✅ Deployment
-
-| Layer    | Platform      | URL                                                                                  |
-| -------- | ------------- | ------------------------------------------------------------------------------------ |
-| Frontend | Vercel        | [https://your-kanban-frontend.vercel.app](https://your-kanban-frontend.vercel.app)   |
-| Backend  | Render        | [https://your-kanban-backend.onrender.com](https://your-kanban-backend.onrender.com) |
-| Database | MongoDB Atlas | —                                                                                    |
 
 ---
 
